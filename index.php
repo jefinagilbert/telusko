@@ -270,7 +270,9 @@
 							$username = "root";
 							$password = "";
 							$db = "travello";
+							$message1="";
 							$conn = new mysqli($servername, $username, $password, $db);
+							$dl = "";
 							$sql = "select name, price, offer, image, title from destination";
 							$result = $conn->query($sql);
 
@@ -282,6 +284,15 @@
 									return "Fixed Price";
 								}
 							}
+							function destlogin($dl){
+								if(isset($_SESSION["username"])){
+									return "destinations.php";
+								}
+								else{
+									$message1 = "Login First";
+									return "#";
+								}
+							}
 							if ($result->num_rows > 0) {
 								while($row = $result->fetch_assoc()) {
 									echo '<div class="destination item">
@@ -290,7 +301,7 @@
 								<div class="spec_offer text-center"><a href="#">'.destoffer($row["offer"]).'</a></div>
 							</div>
 							<div class="destination_content">
-								<div class="destination_title"><a href="destinations.php">'. $row["name"] .'</a></div>
+								<div class="destination_title"><a href="'.destlogin($dl).'">'. $row["name"] .'</a></div>
 								<div class="destination_subtitle"><p>'. $row["title"] .'</p></div>
 								<div class="destination_price">From '. $row["price"] .'</div>
 							</div>
