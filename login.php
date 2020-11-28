@@ -44,6 +44,7 @@
 	   if(is_array($row)) {
 	   $_SESSION["username"] = $row['username'];
 	   $_SESSION["email"] = $row['email'];
+	   $_SESSION["name"] = $row['Name'];
 	   } else {
 	   $message = "Invalid Username or Password!";
 	   }
@@ -57,6 +58,7 @@
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
 			<div class="wrap-login100">
+			<h4 style="text-align:center; position:absolute; top:10px; left:46%; color:red; font-weight:bold;"><?php echo $_SESSION["message1"];   ?></h4>
 				<form class="login100-form validate-form" action="" method="POST">
 					<span class="login100-form-logo">
 						<i class="zmdi zmdi-landscape"></i>

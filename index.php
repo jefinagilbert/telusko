@@ -34,7 +34,6 @@
 									<li><a href="news.php">News</a></li>
 									<li><a href="contact.php">Contact</a></li>
 									<?php 
-
 										$servername = "localhost";
 										$username = "root";
 										$password = "";
@@ -44,13 +43,15 @@
 
 										session_start();
 										if(isset($_SESSION["username"])){
-											echo '<li><a href="">Welcome, '.$_SESSION["username"].'</a></li>
+											echo '<li><a href="">Welcome, '.$_SESSION["name"].'</a></li>
 											<li><a href="logout.php">Logout</a></li>';
 										}
 										else{
 											echo '<li><a href="login.php">Login</a></li>';											
 										}									
 								?>
+								
+									
 								</ul>
 							</nav>
 							<div class="header_phone ml-auto">Call us: 00-56 445 678 33</div>
@@ -270,7 +271,7 @@
 							$username = "root";
 							$password = "";
 							$db = "travello";
-							$message1="";
+							
 							$conn = new mysqli($servername, $username, $password, $db);
 							$dl = "";
 							$sql = "select name, price, offer, image, title from destination";
@@ -286,12 +287,14 @@
 							}
 							function destlogin($dl){
 								if(isset($_SESSION["username"])){
-									return "destinations.php";
+									return "booking.php";
 								}
 								else{
 									$message1 = "Login First";
-									return "#";
+									$_SESSION["message1"] = $message1;
+									return "login.php";
 								}
+							
 							}
 							if ($result->num_rows > 0) {
 								while($row = $result->fetch_assoc()) {
@@ -305,7 +308,7 @@
 								<div class="destination_subtitle"><p>'. $row["title"] .'</p></div>
 								<div class="destination_price">From '. $row["price"] .'</div>
 							</div>
-							</div>';			
+							</div>';
 						}}  $conn->close(); ?>
 					</div>
 				</div>

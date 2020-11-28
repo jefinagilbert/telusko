@@ -30,8 +30,6 @@
 							<nav class="main_nav">
 								<ul class="d-flex flex-row align-items-start justify-content-start">
 									<li><a href="index.php">Home</a></li>
-									<li><a href="about.php">About us</a></li>
-									<li><a href="#">Services</a></li>
 									<li><a href="news.php">News</a></li>
 									<li><a href="contact.php">Contact</a></li>
 								</ul>
@@ -72,7 +70,6 @@
 			<ul>
 				<li><a href="inex.html">Home</a></li>
 				<li><a href="about.html">About us</a></li>
-				<li><a href="#">Services</a></li>
 				<li><a href="news.html">News</a></li>
 				<li><a href="contact.html">Contact</a></li>
 			</ul>
@@ -97,21 +94,22 @@
 	</div>
 
 	<!-- Search -->
+	
 
 	<div class="home_search">
 		<div class="container">
 			<div class="row">
 				<div class="col">
 					<div class="home_search_container">
-						<div class="home_search_title">Search for your trip</div>
+						<div class="home_search_title">Request for your trip</div>
 						<div class="home_search_content">
-							<form action="#" class="home_search_form" id="home_search_form">
+							<form action="" method="POST" class="home_search_form" id="home_search_form">
 								<div class="d-flex flex-lg-row flex-column align-items-start justify-content-lg-between justify-content-start">
-									<input type="text" class="search_input search_input_1" placeholder="City" required="required">
-									<input type="text" class="search_input search_input_2" placeholder="Departure" required="required">
-									<input type="text" class="search_input search_input_3" placeholder="Arrival" required="required">
-									<input type="text" class="search_input search_input_4" placeholder="Budget" required="required">
-									<button class="home_search_button">search</button>
+									<input type="text" class="search_input search_input_1" name="name" placeholder="Name" required="required">
+									<input type="text" class="search_input search_input_2" name="arrival" placeholder="Arrival" required="required">
+									<input type="text" class="search_input search_input_3" name="departure" placeholder="Departure" required="required">
+									<input type="date" class="search_input search_input_4" name="date" placeholder="date" required="required">
+									<button class="home_search_button">Request</button>
 								</div>
 							</form>
 						</div>

@@ -31,8 +31,6 @@
 								<ul class="d-flex flex-row align-items-start justify-content-start">
 									<li><a href="index.php">Home</a></li>
 									<li><a href="about.php">About us</a></li>
-									<li><a href="#">Services</a></li>
-									<li class="active"><a href="news.php">News</a></li>
 									<li><a href="contact.php">Contact</a></li>
 								</ul>
 							</nav>
