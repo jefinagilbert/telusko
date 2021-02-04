@@ -40,7 +40,7 @@
             <div class="container">
                 <div class="signup-content">
                     <form method="POST" action="" id="signup-form" class="signup-form">
-                        <h2 class="form-title">Create account</h2>
+                    <h2 class="form-title">Create account on <a href="index.php" style="text-decoration: none;">Travello</a></h2>
                         <div class="form-group">
                             <input type="text" class="form-input" name="name" id="name" placeholder="Your Name"/>
                         </div>

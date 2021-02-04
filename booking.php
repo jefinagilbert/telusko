@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>Booking Form HTML Template</title>
+	<title>Travello</title>
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
@@ -33,16 +33,28 @@
 		$username = "root";
 		$password = "";
 		$db = "travello";
-		$message="";
+		$msg="";
 		$result= FALSE;
 		if(count($_POST)>0) {
-			$con = mysqli_connect($servername, $username, $password, $db);
-			session_start();
-			$sql = "INSERT INTO booking(name,email,tele,arrival,departure,date) VALUES ('" . $_SESSION["name"] . "','" . $_POST["email"] . "','" . $_POST["tele"] . "','" . $_POST["arrival"] . "', '" . $_POST["departure"] . "','" . $_POST["date"]. "')";
-			$result = mysqli_query($con,$sql);
+			if($_POST["email"] and $_POST["tele"] and $_POST["departure"] and $_POST["arrival"] and $_POST["date"]){
+				$con = mysqli_connect($servername, $username, $password, $db);
+				session_start();
+				$_SESSION["otpemail"] = $_POST["email"];
+ 				$_SESSION["email"]=$_POST["email"];
+ 				$_SESSION["tele"]=$_POST["tele"];
+				$_SESSION["departure"]=$_POST["departure"];
+ 				$_SESSION["arrival"]=$_POST["arrival"];
+ 				$_SESSION["date"]=$_POST["date"];
+				$_SESSION["tell"] = count($_POST);
+				header("Location:otpprocess1.php");
+			}
+			else{
+				session_start();
+				$msg = "!Have to fill every Columns";
+			}
 		 }
-		 if($result==TRUE){
-			 header("Location:index.php");
+		 else{
+			 session_start();
 		 }	
 ?>
 	<div id="booking" class="section">
@@ -51,14 +63,14 @@
 				<div class="row">
 					<div class="booking-form">
 						<div class="form-header">
-							<h1><a href="index.php">Travello</a></h1>
+							<h1><a style="color:yellow; font-family: 'Oswald', sans-serif;" href="index.php">Travello</a></h1>
 						</div>
 						<form method="POST" action="">
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="form-group">
 										<span class="form-label">Name</span>
-										<label class="form-control"><?php session_start(); echo $_SESSION["name"]; ?></label>
+										<label class="form-control"><?php echo $_SESSION["name"]; ?></label>
 									</div>
 								</div>
 								<div class="col-sm-6">
@@ -74,11 +86,11 @@
 							</div>
 							<div class="form-group">
 								<span class="form-label">Pickup Location</span>
-								<input class="form-control" type="text" name="arrival" placeholder="Enter Location">
+								<input class="form-control" type="text" name="departure" placeholder="Enter Location">
 							</div>
 							<div class="form-group">
 								<span class="form-label">Destination</span>
-								<select class="form-control" name="departure" ><?php 
+								<select class="form-control" name="arrival" ><?php 
 								$con = mysqli_connect($servername, $username, $password, $db);
 								$sql = "select * from destination";
 								$result = mysqli_query($con,$sql);
@@ -97,6 +109,9 @@
 										<input class="form-control" type="date" name="date" required>
 									</div>
 								</div>
+								<h5 style="font-size:20px; color:red; position:absolute; top:77%; left: 48%;">
+									<?php echo $msg; ?>
+								</h5>
 							</div>
 							<div class="form-btn">
 								<button class="submit-btn">Book Now</button>

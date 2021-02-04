@@ -31,8 +31,6 @@
 							<nav class="main_nav">
 								<ul class="d-flex flex-row align-items-start justify-content-start">
 									<li class="active"><a href="index.php">Home</a></li>
-									<li><a href="news.php">News</a></li>
-									<li><a href="contact.php">Contact</a></li>
 									<?php 
 										$servername = "localhost";
 										$username = "root";
@@ -43,10 +41,12 @@
 
 										session_start();
 										if(isset($_SESSION["username"])){
+											echo '<li><a href="display.php">Booked</a></li>';
 											echo '<li><a href="">Welcome, '.$_SESSION["name"].'</a></li>
 											<li><a href="logout.php">Logout</a></li>';
 										}
 										else{
+											echo '<li><a href="admin.php">Admin Panel</a></li>';
 											echo '<li><a href="login.php">Login</a></li>';											
 										}									
 								?>
@@ -54,7 +54,7 @@
 									
 								</ul>
 							</nav>
-							<div class="header_phone ml-auto">Call us: 00-56 445 678 33</div>
+							<div class="header_phone ml-auto">Call us: 9898757887</div>
 
 							<!-- Hamburger -->
 
@@ -290,9 +290,9 @@
 									return "booking.php";
 								}
 								else{
-									$message1 = "Login First";
-									$_SESSION["message1"] = $message1;
-									return "login.php";
+									$message = "Login First";
+									$url = "login.php?message=".$message;
+									return $url;	
 								}
 							
 							}
@@ -489,11 +489,11 @@
 							<div class="newsletter_subtitle">Join our database NOW!</div>
 						</div>
 						<div class="newsletter_form_container">
-							<form action="#" class="newsletter_form d-flex flex-md-row flex-column align-items-start justify-content-between" id="newsletter_form">
-								<div class="d-flex flex-md-row flex-column align-items-start justify-content-between">
-									<div><input type="text" class="newsletter_input newsletter_input_name" id="newsletter_input_name" placeholder="Name" required="required"><div class="input_border"></div></div>
-									<div><input type="email" class="newsletter_input newsletter_input_email" id="newsletter_input_email" placeholder="Your e-mail" required="required"><div class="input_border"></div></div>
-								</div>
+							<form action="display.php" class="newsletter_form d-flex flex-md-row flex-column align-items-start justify-content-between" id="newsletter_form">
+							<div class="d-flex flex-md-row flex-column align-items-start justify-content-between">
+								<div><input type="text" class="newsletter_input newsletter_input_name" id="newsletter_input_name" placeholder="Name" required="required"><div class="input_border"></div></div>
+								<div><input type="email" class="newsletter_input newsletter_input_email" id="newsletter_input_email" placeholder="Your e-mail" required="required"><div class="input_border"></div></div>
+							</div>
 								<div><button class="newsletter_button">subscribe</button></div>
 							</form>
 						</div>
