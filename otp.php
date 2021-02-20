@@ -36,10 +36,10 @@ if(isset($_POST['save']))
 	$db = "travello";
 	$con = mysqli_connect($servername, $username, $password, $db);
 	$_SESSION["status"] = "pending";
-	$_SESSION["id"] = uniqid();
+	date_default_timezone_set("Asia/Calcutta");
 	$currdate = date("y/m/d");
 	$currtime = date("h:i:sa");
-	$sql = "INSERT INTO booking(id,name,email,tele,departure,arrival,currdate,currtime,date,status) VALUES ('" . $_SESSION["id"] . "','" . $_SESSION["name"] . "','" . $_SESSION["email"] . "','" . $_SESSION["tele"] . "','" . $_SESSION["departure"] . "','" . $_SESSION["arrival"] . "','" . $currdate . "','" . $currtime . "','" . $_SESSION["date"] . "','" . $_SESSION["status"] . "')";
+	$sql = "INSERT INTO booking(name,email,tele,departure,arrival,currdate,currtime,date,status) VALUES ('" . $_SESSION["name"] . "','" . $_SESSION["email"] . "','" . $_SESSION["tele"] . "','" . $_SESSION["departure"] . "','" . $_SESSION["arrival"] . "','" . $currdate . "','" . $currtime . "','" . $_SESSION["date"] . "','" . $_SESSION["status"] . "')";
 	$result = mysqli_query($con,$sql);
 	if($result>0){
 		header("Location:otpsuccess.php");
@@ -98,21 +98,20 @@ if(isset($_POST['save']))
 	
 
 	
-<!--===============================================================================================-->	
+
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
+
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
+
 	<script src="vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
+
 	<script src="vendor/tilt/tilt.jquery.min.js"></script>
 	<script >
 		$('.js-tilt').tilt({
 			scale: 1.1
 		})
 	</script>
-<!--===============================================================================================-->
 	<script src="js/main2.js"></script>
 
 </body>

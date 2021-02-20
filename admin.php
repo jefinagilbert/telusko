@@ -50,14 +50,14 @@ th, td {
     <th>Status</th>
   </tr>
 <?php
-function status($stat,$idid){
+function status($stat,$idid,$em){
     if($stat == "pending"){
-        $sta1 = "accept";
-        $sta2 = "decline";
-        return '<a href="statusprocess.php?sta1=1&id='.$idid.'" style={color:green;}>Accept</a> <a href="statusprocess.php?sta2=0&id='.$idid.'" style={color:red;}>Decline</a>';
+      $_POST["em"] = $em;
+      return '<a href="statusprocess.php?sta1=1&id='.$idid.'&em='.$em.'" style={color:green;}>Accept</a> <a href="statusprocess.php?sta2=0&id='.$idid.'&em='.$em.'" style={color:red;}>Decline</a>';
     }
     else{
-        return $stat;
+      $_POST["em"] = $em;
+      return '<a href="statusprocess.php?sta1=1&id='.$idid.'&em='.$em.'" style={color:green;}>Accept</a> <a href="statusprocess.php?sta2=0&id='.$idid.'&em='.$em.'" style={color:red;}>Decline</a>';
     }
 }
 if (mysqli_num_rows($result) > 0) {
@@ -72,7 +72,7 @@ if (mysqli_num_rows($result) > 0) {
     <td>'.$row["date"].'</td>
     <td>'.$row["currdate"].'</td>
     <td>'.$row["currtime"].'</td>
-    <td>'.status($row["status"],$row["id"]).'</td>
+    <td>'."Current Status : ".$row["status"]."<br>".status($row["status"],$row["id"],$row["email"]).'</td>
   </tr>';
     }}
     else{

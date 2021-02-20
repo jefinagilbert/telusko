@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign Up</title>
 
-    <!-- Font Icon -->
+
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
 
-    <!-- Main css -->
+
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -24,10 +24,16 @@
 	session_start();
 	if(count($_POST)>0) {
 	   $con = mysqli_connect($servername, $username, $password, $db);
+       $sql1 = "SELECT * FROM login WHERE username='" . $_POST["username"] . "'";
+       $result1 = mysqli_query($con,$sql1);
+       $row  = mysqli_fetch_array($result1);
+       if(isset($row)){
+        header("Location:register.php?msg=Username Already exist");
+       }
 	   $sql = "INSERT INTO login(Name,username,email,pass) VALUES ('" . $_POST["name"] . "','" . $_POST["username"] . "', '" . $_POST["email"] . "','" . $_POST["password"]. "')";
        $result = mysqli_query($con,$sql);
     }
-	   if($result === TRUE) {
+	if($result === TRUE) {
         header("Location:login.php");
         }
        
@@ -36,26 +42,28 @@
     <div class="main">
 
         <section class="signup">
-            <!-- <img src="images/signup-bg.jpg" alt=""> -->
             <div class="container">
                 <div class="signup-content">
                     <form method="POST" action="" id="signup-form" class="signup-form">
                     <h2 class="form-title">Create account on <a href="index.php" style="text-decoration: none;">Travello</a></h2>
                         <div class="form-group">
-                            <input type="text" class="form-input" name="name" id="name" placeholder="Your Name"/>
+                            <input type="text" class="form-input" name="name" id="name" placeholder="Your Name" required="required"/>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-input" name="username" id="email" placeholder="Your Username"/>
+                            <input type="text" class="form-input" name="username" id="email" placeholder="Your Username" required="required"/>
+                            <?php if(isset($_GET["msg"])){
+                            echo "<label for='username' style='color:red; font-weight:bold;'>".$_GET['msg']."</label>";
+                        } ?>
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-input" name="email" id="password" placeholder="Your Email"/>                            
+                            <input type="email" class="form-input" name="email" id="password" placeholder="Your Email" required="required"/>                            
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-input" name="password" id="re_password" placeholder="Password"/>
+                            <input type="password" class="form-input" name="password" id="re_password" placeholder="Password" required="required"/>
                             <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
                         </div>
                         <div class="form-group">
-                            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" required="required"/>
                             <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
                         </div>
                         <div class="form-group">
@@ -71,8 +79,8 @@
 
     </div>
 
-    <!-- JS -->
+    
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="js/main1.js"></script>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</body>
 </html>

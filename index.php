@@ -169,8 +169,7 @@
 			<div class="home_page_nav">
 				<ul class="d-flex flex-column align-items-end justify-content-end">
 					<li><a href="#" data-scroll-to="#destinations">Offers<span>01</span></a></li>
-					<li><a href="#" data-scroll-to="#testimonials">Testimonials<span>02</span></a></li>
-					<li><a href="#" data-scroll-to="#news">Latest<span>03</span></a></li>
+					<li><a href="#" data-scroll-to="#news">Latest<span>02</span></a></li>
 				</ul>
 			</div>
 		</div>
@@ -187,9 +186,7 @@
 						<div class="home_search_content">
 							<form action="#" class="home_search_form" id="home_search_form">
 								<div class="d-flex flex-lg-row flex-column align-items-start justify-content-lg-between justify-content-start">
-									<input type="text" class="search_input search_input_1" placeholder="City" required="required">
-									<input type="text" class="search_input search_input_2" placeholder="Departure" required="required">
-									<input type="text" class="search_input search_input_3" placeholder="Arrival" required="required">
+									<input type="text" id="in1" class="search_input search_input_1" placeholder="City" required="required">
 									<input type="text" class="search_input search_input_4" placeholder="Budget" required="required">
 									<button class="home_search_button">search</button>
 								</div>
@@ -274,6 +271,7 @@
 							
 							$conn = new mysqli($servername, $username, $password, $db);
 							$dl = "";
+							$kl = "";
 							$sql = "select name, price, offer, image, title from destination";
 							$result = $conn->query($sql);
 
@@ -285,9 +283,9 @@
 									return "Fixed Price";
 								}
 							}
-							function destlogin($dl){
+							function destlogin($dl,$kl){
 								if(isset($_SESSION["username"])){
-									return "booking.php";
+									return "booking.php?namenam=$kl";
 								}
 								else{
 									$message = "Login First";
@@ -304,7 +302,7 @@
 								<div class="spec_offer text-center"><a href="#">'.destoffer($row["offer"]).'</a></div>
 							</div>
 							<div class="destination_content">
-								<div class="destination_title"><a href="'.destlogin($dl).'">'. $row["name"] .'</a></div>
+								<div class="destination_title"><a href="'.destlogin($dl,$row["name"]).'">'. $row["name"] .'</a></div>
 								<div class="destination_subtitle"><p>'. $row["title"] .'</p></div>
 								<div class="destination_price">From '. $row["price"] .'</div>
 							</div>
@@ -316,71 +314,7 @@
 		</div>
 	</div>
 
-	<!-- Testimonials -->
-
-	<div class="testimonials" id="testimonials">
-		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="images/testimonials.jpg" data-speed="0.8"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col text-center">
-					<div class="section_subtitle">simply amazing places</div>
-					<div class="section_title"><h2>Testimonials</h2></div>
-				</div>
-			</div>
-			<div class="row testimonials_row">
-				<div class="col">
-
-					<!-- Testimonials Slider -->
-					<div class="testimonials_slider_container">
-						<div class="owl-carousel owl-theme testimonials_slider">
-							
-							<!-- Slide -->
-							<div class="owl-item text-center">
-								<div class="testimonial">Lorem ipsum dolor sit amet, consectetur adipiscing elit. lobortis dolor. Cras placerat lectus a posuere aliquet. Curabitur quis vehicula odio.</div>
-								<div class="testimonial_author">
-									<div class="testimonial_author_content d-flex flex-row align-items-end justify-content-start">
-										<div>john turner,</div>
-										<div>client</div>
-									</div>
-								</div>
-							</div>
-
-							<!-- Slide -->
-							<div class="owl-item text-center">
-								<div class="testimonial">Lorem ipsum dolor sit amet, consectetur adipiscing elit. lobortis dolor. Cras placerat lectus a posuere aliquet. Curabitur quis vehicula odio.</div>
-								<div class="testimonial_author">
-									<div class="testimonial_author_content d-flex flex-row align-items-end justify-content-start">
-										<div>john turner,</div>
-										<div>client</div>
-									</div>
-								</div>
-							</div>
-
-							<!-- Slide -->
-							<div class="owl-item text-center">
-								<div class="testimonial">Lorem ipsum dolor sit amet, consectetur adipiscing elit. lobortis dolor. Cras placerat lectus a posuere aliquet. Curabitur quis vehicula odio.</div>
-								<div class="testimonial_author">
-									<div class="testimonial_author_content d-flex flex-row align-items-end justify-content-start">
-										<div>john turner,</div>
-										<div>client</div>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="test_nav">
-			<ul class="d-flex flex-column align-items-end justify-content-end">
-				<li><a href="#">City Breaks Clients<span>01</span></a></li>
-				<li><a href="#">Cruises Clients<span>02</span></a></li>
-				<li><a href="#">All Inclusive Clients<span>03</span></a></li>
-			</ul>
-		</div>
-	</div>
-
+	
 	<!-- News -->
 
 	<div class="news" id="news">
@@ -481,25 +415,6 @@
 	<footer class="footer">
 		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="images/footer_1.jpg" data-speed="0.8"></div>
 		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="newsletter">
-						<div class="newsletter_title_container text-center">
-							<div class="newsletter_title">Subscribe to our newsletter to get the latest trends & news</div>
-							<div class="newsletter_subtitle">Join our database NOW!</div>
-						</div>
-						<div class="newsletter_form_container">
-							<form action="display.php" class="newsletter_form d-flex flex-md-row flex-column align-items-start justify-content-between" id="newsletter_form">
-							<div class="d-flex flex-md-row flex-column align-items-start justify-content-between">
-								<div><input type="text" class="newsletter_input newsletter_input_name" id="newsletter_input_name" placeholder="Name" required="required"><div class="input_border"></div></div>
-								<div><input type="email" class="newsletter_input newsletter_input_email" id="newsletter_input_email" placeholder="Your e-mail" required="required"><div class="input_border"></div></div>
-							</div>
-								<div><button class="newsletter_button">subscribe</button></div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
 			<div class="row footer_contact_row">
 				<div class="col-xl-10 offset-xl-1">
 					<div class="row">
@@ -511,8 +426,8 @@
 								<div class="footer_contact_title">give us a call</div>
 								<div class="footer_contact_list">
 									<ul>
-										<li>Office Landline: +44 5567 32 664 567</li>
-										<li>Mobile: +44 5567 89 3322 332</li>
+										<li>Office Landline: +0461 233506</li>
+										<li>Mobile: +91 6789564534</li>
 									</ul>
 								</div>
 							</div>
@@ -525,7 +440,7 @@
 								<div class="footer_contact_title">come & drop by</div>
 								<div class="footer_contact_list">
 									<ul style="max-width:190px">
-										<li>4124 Barnes Street, Sanford, FL 32771</li>
+										<li>4134 Bazaar Street, Chennai</li>
 									</ul>
 								</div>
 							</div>
@@ -538,8 +453,8 @@
 								<div class="footer_contact_title">send us a message</div>
 								<div class="footer_contact_list">
 									<ul>
-										<li>youremail@gmail.com</li>
-										<li>Office@yourbusinessname.com</li>
+										<li>travelloadmin@gmail.com</li>
+										<li>travello@gmail.com</li>
 									</ul>
 								</div>
 							</div>
@@ -549,10 +464,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col text-center"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> </div>
-	</footer>
+		
 </div>
 
 <script src="js/jquery-3.2.1.min.js"></script>
@@ -564,5 +476,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="plugins/easing/easing.js"></script>
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
 <script src="js/custom.js"></script>
+
 </body>
 </html>
