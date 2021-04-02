@@ -6,6 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Travello template project">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
 <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
 <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
@@ -40,13 +41,14 @@
 										$conn = mysqli_connect($servername, $username, $password, $db);
 
 										session_start();
+										
 										if(isset($_SESSION["username"])){
 											echo '<li><a href="display.php">Booked</a></li>';
 											echo '<li><a href="">Welcome, '.$_SESSION["name"].'</a></li>
 											<li><a href="logout.php">Logout</a></li>';
 										}
 										else{
-											echo '<li><a href="admin.php">Admin Panel</a></li>';
+											echo '<li><a href="admin/adminlogin.php">Admin Panel</a></li>';
 											echo '<li><a href="login.php">Login</a></li>';											
 										}									
 								?>
@@ -255,7 +257,7 @@
 			<div class="row">
 				<div class="col text-center">
 					<div class="section_subtitle">simply amazing places</div>
-					<div class="section_title"><h2>Popular Destinations</h2></div>
+					<div class="section_title"><h2>Available Destinations</h2></div>
 				</div>
 			</div>
 			<div class="row destinations_row">
@@ -272,39 +274,37 @@
 							$conn = new mysqli($servername, $username, $password, $db);
 							$dl = "";
 							$kl = "";
-							$sql = "select name, price, offer, image, title from destination";
+							$sql = "select * from destination";
 							$result = $conn->query($sql);
 
 							function destoffer($offer){
 								if($offer == 1){
-									return "Special Offer";
+									return "<div class='spec_offer text-center'><a href=''>Special Offer</a></div>";
 								}
 								else{
-									return "Fixed Price";
+									return "";
 								}
 							}
 							function destlogin($dl,$kl){
 								if(isset($_SESSION["username"])){
-									return "booking.php?namenam=$kl";
+									return "booking.php?namenam=$kl&plid=$dl";
 								}
 								else{
-									$message = "Login First";
-									$url = "login.php?message=".$message;
-									return $url;	
+									return "login.php?message=Login First";
 								}
-							
 							}
 							if ($result->num_rows > 0) {
 								while($row = $result->fetch_assoc()) {
 									echo '<div class="destination item">
 							<div class="destination_image">
-								<img src="data:image/jpeg;base64,'.base64_encode( $row['image'] ).'"/>
-								<div class="spec_offer text-center"><a href="#">'.destoffer($row["offer"]).'</a></div>
+								<img src="data:image/jpeg;base64,'.base64_encode( $row['image'] ).'" width="400px" height="250px"/>
+								'.destoffer($row["offer"]).'
+								<div class="top-right" style="position:absolute; top:6px; right:3px; background-color:green; color:white; width:70px; height:33px; text-align:center; user-select:none;"><b style="font-size:18px;">4.5/5</b></div>
 							</div>
 							<div class="destination_content">
-								<div class="destination_title"><a href="'.destlogin($dl,$row["name"]).'">'. $row["name"] .'</a></div>
+								<div class="destination_title"><a href="'.destlogin($row["placeid"],$row["name"]).'">'. $row["name"] .'</a></div>
 								<div class="destination_subtitle"><p>'. $row["title"] .'</p></div>
-								<div class="destination_price">From '. $row["price"] .'</div>
+								<div class="destination_price">Rs '. $row["price"] .'</div>
 							</div>
 							</div>';
 						}}  $conn->close(); ?>

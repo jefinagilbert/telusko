@@ -27,14 +27,18 @@ th, td {
 <body>
 <?php
     session_start();
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $db = "travello";
-    $con = mysqli_connect($servername, $username, $password, $db);
-    $sql = "select * from booking where name ='".$_SESSION["name"]."'";
-    $result = mysqli_query($con,$sql);
-
+    if(isset($_SESSION["username"])){
+			$servername = "localhost";
+      $username = "root";
+      $password = "";
+      $db = "travello";
+      $con = mysqli_connect($servername, $username, $password, $db);
+      $sql = "select * from booking where name ='".$_SESSION["name"]."'";
+      $result = mysqli_query($con,$sql);
+		}
+    else{
+      header("Location:index.php");
+    }
 ?>
 
 <table id="t01">
@@ -47,6 +51,9 @@ th, td {
     <th>Date</th>
     <th>Booked Date</th>
     <th>Booked Time</th>
+    <th>No of Travellers</th>
+    <th>Allotted Car</th>
+    <th>Cost</th>
     <th>Status</th>
   </tr>
 <?php
@@ -62,6 +69,9 @@ if (mysqli_num_rows($result) > 0) {
     <td>'.$row["date"].'</td>
     <td>'.$row["currdate"].'</td>
     <td>'.$row["currtime"].'</td>
+    <td>'.$row["nooftravellers"].'</td>
+    <td>'.$row["allottedcar"].'</td>
+    <td>'.$row["cost"].'<br><a href="#">Pay Online</a></td>
     <td>'.$row["status"].'</td>
   </tr>';
     }}

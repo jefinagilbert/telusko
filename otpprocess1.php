@@ -1,5 +1,11 @@
 <?php 
  session_start();
+ if(isset($_SESSION["email"])){
+	//nothing bro
+}
+else{
+	header("Location:index.php");
+}
  $rndno = rand(1000,9999);
  $message = urlencode("otp number.".$rndno);
  $to = $_SESSION["otpemail"];

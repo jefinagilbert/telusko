@@ -1,8 +1,17 @@
 <?php
 session_start();
-unset($_SESSION["username"]);
-unset($_SESSION["password"]);
-unset($_SESSION["Name"]);
-unset($_SESSION["email"]);
-header("Location:index.php");
+if(isset($_SESSION["username"])){
+    unset($_SESSION["username"]);
+    unset($_SESSION["name"]);
+    unset($_SESSION["email"]);
+    header("Location:index.php");
+}
+elseif(isset($_SESSION["adminuname"])){
+    unset($_SESSION["adminname"]);
+    unset($_SESSION["adminuname"]);
+    header("Location:index.php");
+}
+else{
+    header("Location:index.php");
+}
 ?>

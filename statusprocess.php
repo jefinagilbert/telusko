@@ -13,7 +13,7 @@ if($_GET["sta1"] == 1){
         $to = $_GET["em"];
         $subject = "Status";
         $txt = "Your Tour Booking is Accepted. For more details Contact our Website http://localhost/travello";
-        $header = "From: TRAVELLO VERIFICATION"." Cc: Welcome";
+        $header = "From: TRAVELLO"." Cc: Welcome";
         mail($to,$subject,$txt,$header);
         header('Location:admin.php');
    } 
@@ -24,12 +24,9 @@ elseif($_GET["sta2"] == 0){
         $to = $_GET["em"];
         $subject = "Status";
         $txt = "Your Tour Booking is Declined. For more details Contact our Website http://localhost/travello";
-        $header = "From: TRAVELLO VERIFICATION"." Cc: Welcome";
+        $header = "From: TRAVELLO"." Cc: Welcome";
         mail($to,$subject,$txt,$header);
         header('Location:admin.php');
        }
 }
-
-
-
 ?>

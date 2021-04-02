@@ -47,6 +47,9 @@ th, td {
     <th>Date</th>
     <th>Booked Date</th>
     <th>Booked Time</th>
+    <th>No of Travellers</th>
+    <th>Allotted Car</th>
+    <th>Cost</th>
     <th>Status</th>
   </tr>
 <?php
@@ -60,6 +63,9 @@ function status($stat,$idid,$em){
       return '<a href="statusprocess.php?sta1=1&id='.$idid.'&em='.$em.'" style={color:green;}>Accept</a> <a href="statusprocess.php?sta2=0&id='.$idid.'&em='.$em.'" style={color:red;}>Decline</a>';
     }
 }
+function delreq($id){
+  return "delreq.php?id=$id";
+}
 if (mysqli_num_rows($result) > 0) {
     while($row = mysqli_fetch_assoc($result)) {
   echo '
@@ -72,7 +78,10 @@ if (mysqli_num_rows($result) > 0) {
     <td>'.$row["date"].'</td>
     <td>'.$row["currdate"].'</td>
     <td>'.$row["currtime"].'</td>
-    <td>'."Current Status : ".$row["status"]."<br>".status($row["status"],$row["id"],$row["email"]).'</td>
+    <td>'.$row["nooftravellers"].'</td>
+    <td>'.$row["allottedcar"].'</td>
+    <td>'.$row["cost"].'</td>
+    <td>'."Current Status : ".$row["status"]."<br>".status($row["status"],$row["id"],$row["email"]).'<br><a href="'.delreq($row["id"]).'">Delete Request</a></td>
   </tr>';
     }}
     else{
@@ -83,6 +92,6 @@ if (mysqli_num_rows($result) > 0) {
 </table>
 <br>
 <br>
-<a href="index.php">Back to home-></a>
+<a href="admin/admindashboard.php">Back to home-></a>
 </body>
 </html>

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign Up</title>
 
-
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
 
 
@@ -27,11 +27,19 @@
        $sql1 = "SELECT * FROM login WHERE username='" . $_POST["username"] . "'";
        $result1 = mysqli_query($con,$sql1);
        $row  = mysqli_fetch_array($result1);
+       $a = 0;
        if(isset($row)){
+        $a += 1;
         header("Location:register.php?msg=Username Already exist");
        }
+       if(strlen($_POST["password"]) < 8){
+        $a += 1;
+        header("Location:register.php?msg1=Password is Weak");
+       }
+       if($a==0){
 	   $sql = "INSERT INTO login(Name,username,email,pass) VALUES ('" . $_POST["name"] . "','" . $_POST["username"] . "', '" . $_POST["email"] . "','" . $_POST["password"]. "')";
        $result = mysqli_query($con,$sql);
+       }
     }
 	if($result === TRUE) {
         header("Location:login.php");
@@ -56,11 +64,14 @@
                         } ?>
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-input" name="email" id="password" placeholder="Your Email" required="required"/>                            
+                            <input type="email" class="form-input" name="email" placeholder="Your Email" required="required"/>                            
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-input" name="password" id="re_password" placeholder="Password" required="required"/>
                             <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                            <?php if(isset($_GET["msg1"])){
+                            echo "<label for='username' style='color:red; font-weight:bold;'>".$_GET['msg1']."</label>";
+                        } ?>
                         </div>
                         <div class="form-group">
                             <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" required="required"/>

@@ -8,6 +8,8 @@
 	
 	<title>Travello</title>
 
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
 
 	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
@@ -18,33 +20,34 @@
 
 <body>
 <?php 
-		$servername = "localhost";
-		$username = "root";
-		$password = "";
-		$db = "travello";
-		$msg="";
-		$result= FALSE;
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$db = "travello";
+	$msg="";
+	$result= FALSE;
+	session_start();
+	if(isset($_SESSION["username"])){
 		if(count($_POST)>0) {
-			if($_POST["email"] and $_POST["tele"] and $_POST["departure"] and $_POST["arrival"] and $_POST["date"]){
+			if($_POST["email"] and $_POST["tele"] and $_POST["departure"] and $_POST["date"] and $_POST["nooftravellers"] and $_GET["namenam"]){
 				$con = mysqli_connect($servername, $username, $password, $db);
-				session_start();
+				$_SESSION["plid"] = $_GET["plid"];		
 				$_SESSION["otpemail"] = $_POST["email"];
- 				$_SESSION["email"]=$_POST["email"];
- 				$_SESSION["tele"]=$_POST["tele"];
+				$_SESSION["tele"]=$_POST["tele"];
 				$_SESSION["departure"]=$_POST["departure"];
- 				$_SESSION["arrival"]=$_POST["arrival"];
- 				$_SESSION["date"]=$_POST["date"];
-				$_SESSION["tell"] = count($_POST);
+				$_SESSION["arrival"]=$_GET["namenam"];
+				$_SESSION["date"]=$_POST["date"];
+				$_SESSION["nooftravellers"] = $_POST["nooftravellers"];
 				header("Location:otpprocess1.php");
 			}
 			else{
-				session_start();
 				$msg = "!Have to fill every Columns";
 			}
-		 }
-		 else{
-			 session_start();
-		 }	
+	 	}
+	}
+	else{
+		header("Location:index.php");
+	}
 ?>
 	<div id="booking" class="section">
 		<div class="section-center">
@@ -70,45 +73,37 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<span class="form-label">Phone</span>
+								<span class="form-label">CONTACT NUMBER</span>
 								<input class="form-control" type="tel" name="tele" placeholder="Enter your phone number" required="required">
 							</div>
 							<div class="form-group">
-								<span class="form-label">Pickup Location</span>
+								<span class="form-label">Pickup Location (YOUR ADDRESS)</span>
 								<input class="form-control" type="text" name="departure" placeholder="Enter Location" required="required">
 							</div>
 							<div class="form-group">
 								<span class="form-label">Destination</span>
-								<select class="form-control" name="arrival">
 								<?php 
 								$con = mysqli_connect($servername, $username, $password, $db);
 								$sql = "select * from destination";
 								$result = mysqli_query($con,$sql);
 								if(isset($_GET["namenam"])){
-									echo '<option value="'.$_GET["namenam"].'">'.$_GET["namenam"].'</option>';
+									echo '<label class="form-control">'.$_GET["namenam"].'</label>';
 								}
-								if ($result->num_rows > 0) {
-									while($row = $result->fetch_assoc()) {
-										if ($row['name'] == $_GET["namenam"]){
-										//nothing bro
-									}
-									else{
-										echo '<option value="'.$row['name'].'">'.$row['name'].'</option>';
-									}
-									}
-								}
-								?></select>
+								?>
 							</div>
 							<div class="row">
 								<div class="col-sm-5">
 									<div class="form-group">
-										<span class="form-label">Pickup Date</span>
-										<input class="form-control" type="date" name="date" required="required">
+										<span class="form-label">No. of Travellers</span>
+										<input class="form-control" type="number" min="2" max="15" name="nooftravellers" required="required">
 									</div>
 								</div>
-								<h5 style="font-size:20px; color:red; position:absolute; top:77%; left: 48%;">
-									<?php echo $msg; ?>
-								</h5>
+								<div class="col-sm-5">
+									<div class="form-group">
+										<span class="form-label">Pickup Date</span>
+										<input class="form-control" min="<?php date_default_timezone_set("Asia/Kolkata"); echo date("Y-m-d"); ?>" max="<?php echo date("Y-m-d",strtotime("+30days")); ?>" type="date" name="date" required="required">	
+									</div>
+								</div>                
 							</div>
 							<div class="form-btn">
 								<button class="submit-btn">Book Now</button>
